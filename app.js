@@ -4,6 +4,7 @@ const galleryHeader = document.querySelector('.gallery-header');
 const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
+const selectedImg = document.getElementById('selected-img');
 // selected image 
 let sliders = [];
 
@@ -44,10 +45,18 @@ const selectItem = (event, img) => {
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
+    showSelectedImg();
   } else {
     sliders.splice(item, 1);
+    showSelectedImg();
   }
 }
+
+// Show Selected Images
+const showSelectedImg = () => {
+  selectedImg.innerText = sliders.length;
+}
+
 var timer
 const createSlider = () => {
   // check slider image length
@@ -85,7 +94,7 @@ const createSlider = () => {
     }, duration);
   }
   else {
-    alert('Duration cannot be negative');
+    alert('Duration cannot be negative!');
   }
 
 }
@@ -122,12 +131,14 @@ searchBtn.addEventListener('click', function () {
   const search = document.getElementById('search');
   getImages(search.value)
   sliders.length = 0;
+  selectedImg.innerText = 0;
 })
 
 // Search by Enter Key
 document.getElementById('search').addEventListener("keypress", function(event) {
   if (event.key === 'Enter') {
     searchBtn.click();
+    selectedImg.innerText = 0;
   }
 });
 
